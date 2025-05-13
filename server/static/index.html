@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Testing Web Server Berhasil</title>
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #00b894, #0984e3);
+            color: #fff;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+            text-align: center;
+            overflow: hidden;
+        }
+
+        h1 {
+            font-size: 3rem;
+            margin-bottom: 20px;
+            animation: fadeIn 1s ease-in-out;
+        }
+
+        p {
+            font-size: 1.3rem;
+            margin-bottom: 30px;
+            animation: fadeIn 1.5s ease-in-out;
+        }
+
+        button {
+            padding: 12px 25px;
+            background-color: #fff;
+            color: #0984e3;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 1rem;
+            transition: background-color 0.3s ease;
+            animation: fadeIn 2s ease-in-out;
+        }
+
+        button:hover {
+            background-color: #dff9fb;
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .fireworks {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+        }
+    </style>
+</head>
+
+<body>
+    <h1>🎉 Testing Web Server Berhasil!</h1>
+    <p>Selamat! Server kamu sudah berjalan dengan baik.</p>
+    <button onclick="reloadPage()">Muat Ulang</button>
+
+    <canvas class="fireworks" id="fireworks"></canvas>
+
+    <script>
+        function reloadPage() {
+            location.reload();
+        }
+
+        // Fireworks animation (simple)
+        const canvas = document.getElementById("fireworks");
+        const ctx = canvas.getContext("2d");
+        canvas.width = window.innerWidth;
+        canvas.height = window.innerHeight;
+
+        const particles = [];
+
+        function Particle(x, y, dx, dy, color) {
+            this.x = x;
+            this.y = y;
+            this.dx = dx;
+            this.dy = dy;
+            this.color = color;
+            this.life = 100;
+        }
+
+        Particle.prototype.update = function () {
+            this.x += this.dx;
+            this.y += this.dy;
+            this.life--;
+        };
+
+        Particle.prototype.draw = function () {
+            ctx.beginPath();
+            ctx.arc(this.x, this.y, 2, 0, Math.PI * 2);
+            ctx.fillStyle = this.color;
+            ctx.fill();
+        };
+
+        function explode(x, y) {
+            const colors = ["#fdcb6e", "#e17055", "#74b9ff", "#55efc4", "#a29bfe"];
+            for (let i = 0; i < 50; i++) {
+                const dx = (Math.random() - 0.5) * 5;
+                const dy = (Math.random() - 0.5) * 5;
+                const color = colors[Math.floor(Math.random() * colors.length)];
+                particles.push(new Particle(x, y, dx, dy, color));
+            }
+        }
+
+        function animate() {
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+            particles.forEach((p, i) => {
+                p.update();
+                p.draw();
+                if (p.life <= 0) particles.splice(i, 1);
+            });
+            requestAnimationFrame(animate);
+        }
+
+        setInterval(() => {
+            const x = Math.random() * canvas.width;
+            const y = Math.random() * canvas.height / 2;
+            explode(x, y);
+        }, 1500);
+
+        animate();
+    </script>
+</body>
+
+</html>
