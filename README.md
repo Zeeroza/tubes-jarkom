@@ -5,7 +5,7 @@ Simple Web Server made with Python Socket Programming. Assembled to fulfill Majo
 ## Team Dev
 
 - [@krisnaganesha1609](https://www.github.com/krisnaganesha1609)
-- [@therealmodder](https://www.github.com/riarumoda)
+- [@riarumoda](https://www.github.com/riarumoda)
 - [@Zeeroza](https://www.github.com/Zeeroza)
 
 ## Run Server Locally
@@ -45,7 +45,7 @@ Go to the client directory
 Start the client
 
 ```bash
-  py main.py
+  py main.py <ip address> <port> <file.html>
 ```
 
 ## Additional
