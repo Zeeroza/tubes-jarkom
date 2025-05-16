@@ -4,6 +4,9 @@ body {
   background-color: #f1f2f6;
   color: #2f3542;
   text-align: center;
+  display: flex;
+        flex-direction: column;
+        min-height: 100vh;
 }
 
 header {
@@ -33,6 +36,7 @@ button {
   color: white;
   cursor: pointer;
   transition: background-color 0.3s ease;
+  align-content:center;
 }
 
 button:hover {
@@ -50,4 +54,7 @@ footer {
   padding: 15px;
   font-size: 14px;
   color: #57606f;
+  bottom: 0px;
+  margin-top: auto; 
+  width: 100%;
 }
