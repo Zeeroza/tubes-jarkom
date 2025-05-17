@@ -1,5 +1,3 @@
-import os
-import signal
 from handler import *
 from strings import bcolors
 from socket import *
@@ -23,7 +21,7 @@ if __name__ == "__main__":
 
     if single_thread == "--single":
         print(f"{bcolors.OKBLUE}[*]{bcolors.ENDC} Running in Single Thread Mode")
-    elif single_thread == "--threaded":
+    elif single_thread == "--multi":
         print(f"{bcolors.OKBLUE}[*]{bcolors.ENDC} Running in Multi Thread Mode")
     else:
         print(f"{bcolors.FAIL}[X] Invalid Argument: {single_thread} {bcolors.ENDC}")
@@ -38,8 +36,7 @@ if __name__ == "__main__":
                 print(f"{bcolors.OKGREEN}[V]{bcolors.ENDC} Connection established with {bcolors.OKCYAN}{ip}:{a}{bcolors.ENDC}")
                 if single_thread == "--single":
                     handleClientRequest(conn, addrTuple)
-                    break
-                elif single_thread == "--threaded":
+                elif single_thread == "--multi":
                     threader = Thread(target=handleClientRequest, args=(conn, addrTuple))
                     threader.daemon = True
                     threader.start()
