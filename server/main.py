@@ -18,6 +18,17 @@ serverSocket.listen(MAX_BACKLOG)
 serverSocket.settimeout(1.0)
 
 if __name__ == "__main__":
+
+    single_thread = sys.argv[1]
+
+    if single_thread == "--single":
+        print(f"{bcolors.OKBLUE}[*]{bcolors.ENDC} Running in Single Thread Mode")
+    elif single_thread == "--threaded":
+        print(f"{bcolors.OKBLUE}[*]{bcolors.ENDC} Running in Multi Thread Mode")
+    else:
+        print(f"{bcolors.FAIL}[X] Invalid Argument: {single_thread} {bcolors.ENDC}")
+        sys.exit(1)
+
     print(f"{bcolors.OKBLUE}[*]{bcolors.ENDC} Servers Are UP! {bcolors.OKCYAN}({SERVER_ADDRESS}:{SERVER_PORT}){bcolors.ENDC}")
     try:
         while True:
@@ -25,9 +36,13 @@ if __name__ == "__main__":
                 conn, addrTuple = serverSocket.accept()
                 ip, a = addrTuple
                 print(f"{bcolors.OKGREEN}[V]{bcolors.ENDC} Connection established with {bcolors.OKCYAN}{ip}:{a}{bcolors.ENDC}")
-                threader = Thread(target=handleClientRequest, args=(conn, addrTuple))
-                threader.daemon = True
-                threader.start()
+                if single_thread == "--single":
+                    handleClientRequest(conn, addrTuple)
+                    break
+                elif single_thread == "--threaded":
+                    threader = Thread(target=handleClientRequest, args=(conn, addrTuple))
+                    threader.daemon = True
+                    threader.start()
             except timeout:
                 continue
     except Exception as e:
