@@ -76,6 +76,15 @@
     </style>
 </head>
 
+<script>
+    // Simulasi blocking thread utama selama 3 detik
+    function heavyTask(ms) {
+        const start = Date.now();
+        while (Date.now() - start < ms) { /* blocking */ }
+    }
+    heavyTask(3000); // Delay 3 detik sebelum user bisa interaksi
+</script>
+
 <body>
     <h1>🎉 Testing Web Server Berhasil!</h1>
     <p>Selamat! Server kamu sudah berjalan dengan baik.</p>
